@@ -1,0 +1,23 @@
+{
+  "name": "nosh",
+  "version": "1.0.0",
+  "description": "Node SHell",
+  "main": "nosh.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "shell",
+    "nosh"
+  ],
+  "author": "Mike Ralphson",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "prompts": "^2.3.2",
+    "shelljs": "^0.8.4",
+    "uuid": "^8.1.0",
+    "yaml": "^1.10.0"
+  }
+}
