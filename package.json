@@ -14,7 +14,9 @@
   "author": "Mike Ralphson",
   "license": "MIT",
   "dependencies": {
+    "isomorphic-git": "^1.4.4",
     "node-fetch": "^2.6.0",
+    "open": "^7.0.4",
     "prompts": "^2.3.2",
     "shelljs": "^0.8.4",
     "uuid": "^8.1.0",
