@@ -29,7 +29,7 @@ const ext = {
   clear: function() { console.clear(); },
   reset: function() { console.clear(); },
   version: function() { console.log(pj.version) },
-  date: function() { console.log(new Date().toLocaleString(process.env.LANG.split('.')[0].replace('_','-'))); },
+  date: function() { console.log(new Date().toLocaleString((process.env.LANG || 'en-GB').split('.')[0].replace('_','-'))); },
   open: async function(args) { await open(args[0]); },
   run: function(args) {
     const s = fs.readFileSync(args[0],'utf8');
@@ -144,8 +144,12 @@ async function main() {
       const out = sh.which(cmd);
       if (out && out.stdout && out.stdout.startsWith('/')) {
         try {
-          const out = child.execSync(response.cmd).toString();
-          if (out) console.log(out);
+          const args = response.cmd.split(' ');
+          const cmd = args.shift();
+          child.spawnSync(cmd,args,{stdio:'inherit'},function(err,out) {
+            if (err) console.warn(err);
+            if (out) console.log(out);
+          });
         }
         catch (ex) {
           //console.error(ex.message);
