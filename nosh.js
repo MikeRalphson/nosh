@@ -65,7 +65,7 @@ const ext = {
       console.timeEnd();
     }
   },
-  g: async function(args) {
+  git: async function(args) {
     const func = args[0];
     if (typeof git[func] === 'function') {
       try {
@@ -121,6 +121,10 @@ const ext = {
   }
 };
 
+ext.quit = sh.exit;
+ext.bye = sh.exit;
+ext['?'] = ext.help;
+
 async function main() {
   while (true) {
 
@@ -130,7 +134,7 @@ async function main() {
       message: process.env.USER+':'+process.cwd().replace('/home/'+process.env.USER,'~')
     });
 
-    let args = response.cmd.split(' ');
+    let args = (response.cmd||'').split(' ');
     let cmd = args[0];
     args = args.slice(1);
     if (typeof sh[cmd] === 'function') {
@@ -141,10 +145,11 @@ async function main() {
       await ext[cmd](args);
     }
     else if (cmd) {
+      if (cmd.startsWith('!')) cmd = cmd.replace('!','');
       const out = sh.which(cmd);
       if (out && out.stdout && out.stdout.startsWith('/')) {
         try {
-          const args = response.cmd.split(' ');
+          const args = response.cmd.replace('!','').split(' ');
           const cmd = args.shift();
           child.spawnSync(cmd,args,{stdio:'inherit'},function(err,out) {
             if (err) console.warn(err);
